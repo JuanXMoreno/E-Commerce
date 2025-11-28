@@ -53,3 +53,30 @@ function renderProducts(prodArray) {
 
 renderProducts(productos);
 
+// filtro
+
+const buscador = document.getElementById("search-input").value;
+const categoriaSeleccionada = document.getElementById("categoria-select");
+const btnLimpiar = document.getElementById("clear-filtro");
+
+function filtrarProductos(){
+    const buscarTexto = buscador.value.toLowerCase();
+    const categoria = categoriaSeleccionada.value;
+
+    const filtered = productos.filter(producto => {
+        const matchCategory = categoria === "all" || producto.categoria === categoria;
+        const matchSearch = producto.titulo.toLowerCase().includes(buscarTexto);
+        return matchCategory && matchSearch;
+    });
+}
+
+renderProducts(filtered);
+
+buscador.addEventListener("input", filtrarProductos);
+categoriaSeleccionada.addEventListener("change", filtrarProductos);
+btnLimpiar.addEventListener("click", () => {
+    buscador.value = "";
+    categorySelect.value = "all";
+    renderProducts(productos);
+});
+
