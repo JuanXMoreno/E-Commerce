@@ -73,4 +73,6 @@
     background: #05F2DB;
     color: #000;
     cursor: pointer;
+    transition: 0.2s;
 }
+
