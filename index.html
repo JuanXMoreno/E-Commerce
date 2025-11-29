@@ -18,6 +18,18 @@
     <main>
         <h1>Productos</h1>
 
+        <div id="filtro">
+            <input type="text" id="search-input" placeholder="Buscar Producto">
+            <select id="categoria-select">
+                <option value="all">Todas las categorias</option>
+                <option value="ropa">Ropa</option>
+                <option value="calzado">Calzado</option>
+                <option value="accesorio">Accesorio</option>
+            </select>
+            <button id="clear-filtro">Limpiar Filtro</button>
+        </div>
+
+
         <div id="productos-container"></div>
     </main>
 

@@ -51,3 +51,26 @@
   background: #05F2DB;
   color: #000;
 }
+
+#filtro {
+    display: flex;
+    gap: 10px;
+    margin: 20px;
+    flex-wrap: wrap;
+}
+
+#filtro input,
+#filtro select,
+#filtro button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #05F2DB;
+    background: #11142C;
+    color: #E8ECF1;
+}
+
+#filtro button:hover {
+    background: #05F2DB;
+    color: #000;
+    cursor: pointer;
+}
