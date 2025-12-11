@@ -31,9 +31,10 @@ const productos = [
 
 
 const container = document.getElementById("productos-container");
+let carrito =[];
 
 function renderProducts(prodArray) {
-    
+
     container.innerHTML = "";
     prodArray.forEach(producto => {
         const card = document.createElement("div");
@@ -46,9 +47,19 @@ function renderProducts(prodArray) {
       <button class="add-to-cart" data-id="${producto.id}">Agregar al carrito</button>
     `;
 
-    container.appendChild(card);
+        container.appendChild(card);
 
     });
+
+    const botonesAgregar = document.querySelectorAll(".add-to-cart");
+
+    botonesAgregar.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const idProducto = parseInt(e.target.dataset.id);
+            agregarAlCarrito(idProducto);
+        });
+    });
+
 }
 
 renderProducts(productos);
@@ -59,7 +70,7 @@ const buscador = document.getElementById("search-input");
 const categoriaSeleccionada = document.getElementById("categoria-select");
 const btnLimpiar = document.getElementById("clear-filtro");
 
-function filtrarProductos(){
+function filtrarProductos() {
     const buscarTexto = buscador.value.toLowerCase();
     const categoria = categoriaSeleccionada.value
 
@@ -69,7 +80,7 @@ function filtrarProductos(){
         return matchCategory && matchSearch;
     });
 
-renderProducts(filtered);
+    renderProducts(filtered);
 
 }
 
