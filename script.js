@@ -165,8 +165,6 @@ carritoItems.addEventListener("click", (e) => {
     }
 });
 
-
-
 function actualizarTotal() {
     const total = carrito.reduce((acc, el) => acc + el.precio * el.cantidad, 0);
     document.getElementById("carrito-total").textContent = "Total: $" + total.toFixed(2);
@@ -184,8 +182,6 @@ function restarCantidad(id) {
 
     if (item.cantidad > 1) {
         item.cantidad--;
-    } else {
-        eliminarDelCarrito(id);
     }
 
     renderCarrito();
