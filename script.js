@@ -165,6 +165,8 @@ carritoItems.addEventListener("click", (e) => {
     }
 });
 
+document.getElementById("vaciar-carrito").addEventListener("click", vaciarCarrito);
+
 function actualizarTotal() {
     const total = carrito.reduce((acc, el) => acc + el.precio * el.cantidad, 0);
     document.getElementById("carrito-total").textContent = "Total: $" + total.toFixed(2);
@@ -201,6 +203,11 @@ function ocultarRestar(boton, cantidad) {
     } else {
         boton.style.visibility = "visible";
     }
+}
+
+function vaciarCarrito() {
+    carrito = [];
+    renderCarrito();
 }
 
 function agregarEventosEliminar() {
