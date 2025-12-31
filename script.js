@@ -74,7 +74,6 @@ const categoriaSeleccionada = document.getElementById("categoria-select");
 const btnLimpiar = document.getElementById("clear-filtro");
 
 function filtrarProductos() {
-function filtrarProductos() {
     const buscarTexto = buscador.value.toLowerCase();
     const categoria = categoriaSeleccionada.value
 
