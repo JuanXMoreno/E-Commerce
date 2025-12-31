@@ -49,7 +49,6 @@ function renderProducts(prodArray) {
 
         container.appendChild(card);
 
-
     });
 
     activarBotonesAgregar();
@@ -124,9 +123,22 @@ function renderCarrito() {
         carritoItem.classList.add("carrito-item");
 
         carritoItem.innerHTML = `
-    <p>${item.titulo} (x${item.cantidad})</p>
-    <p>$${(item.precio * item.cantidad).toFixed(2)}</p>
-`;
+            <p class="carrito-titulo">${item.titulo}</p>
+
+            <p class="carrito-precio">$${(item.precio * item.cantidad).toFixed(2)}</p>
+
+                <div class="carrito-controles">
+                    <button class="btn-restar" data-id="${item.id}">➖</button>
+                    <span>x${item.cantidad}</span>
+                    <button class="btn-sumar" data-id="${item.id}">➕</button>
+                </div>
+
+
+            <button class="btn-eliminar" data-id="${item.id}">❌</button>`
+            ;
+
+        const btnRestar = carritoItem.querySelector(".btn-restar");
+        ocultarRestar(btnRestar, item.cantidad);
 
         contenido.appendChild(carritoItem);
     });
@@ -134,10 +146,79 @@ function renderCarrito() {
     actualizarTotal();
 }
 
+const carritoItems = document.getElementById("carrito-items");
+
+carritoItems.addEventListener("click", (e) => {
+    const id = Number(e.target.dataset.id);
+    if (!id) return;
+
+    switch (true) {
+        case e.target.classList.contains("btn-eliminar"):
+            eliminarDelCarrito(id);
+            break;
+        case e.target.classList.contains("btn-restar"):
+            restarCantidad(id);
+            break;
+        case e.target.classList.contains("btn-sumar"):
+            sumarCantidad(id);
+            break;
+    }
+});
+
+
+
 function actualizarTotal() {
     const total = carrito.reduce((acc, el) => acc + el.precio * el.cantidad, 0);
     document.getElementById("carrito-total").textContent = "Total: $" + total.toFixed(2);
 }
+
+function eliminarDelCarrito(id) {
+    carrito = carrito.filter(item => item.id !== id);
+    renderCarrito();
+}
+
+function restarCantidad(id) {
+    const item = carrito.find(p => p.id === id);
+
+    if (!item) return;
+
+    if (item.cantidad > 1) {
+        item.cantidad--;
+    } else {
+        eliminarDelCarrito(id);
+    }
+
+    renderCarrito();
+}
+
+function sumarCantidad(id) {
+    const item = carrito.find(p => p.id === id);
+    if (item) {
+        item.cantidad++;
+        renderCarrito();
+    }
+}
+
+function ocultarRestar(boton, cantidad) {
+    if (cantidad <= 1) {
+        boton.style.visibility = "hidden";
+    } else {
+        boton.style.visibility = "visible";
+    }
+}
+
+function agregarEventosEliminar() {
+    const botonesEliminar = document.querySelectorAll(".btn-eliminar");
+
+    botonesEliminar.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const id = parseInt(btn.dataset.id);
+            eliminarDelCarrito(id);
+        });
+    });
+}
+
+
 
 
 
