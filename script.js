@@ -48,7 +48,6 @@ function renderProducts(prodArray) {
     `;
 
         container.appendChild(card);
-        container.appendChild(card);
 
     });
 
