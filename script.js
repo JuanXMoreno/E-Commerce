@@ -1,35 +1,18 @@
-const productos = [
-    {
-        id: 1,
-        titulo: "Remera Hombre",
-        precio: 22.99,
-        img: "assets/remera.jpg",
-        categoria: "ropa"
-    },
-    {
-        id: 2,
-        titulo: "Zapatillas Deportivas",
-        precio: 49.99,
-        img: "assets/zapatillas.jpg",
-        categoria: "calzado"
-    },
-    {
-        id: 3,
-        titulo: "Mochila Escolar",
-        precio: 35.99,
-        img: "assets/mochila.jpg",
-        categoria: "accesorio"
-    },
-    {
-        id: 4,
-        titulo: "Gorra Unisex",
-        precio: 15.99,
-        img: "assets/gorra.jpg",
-        categoria: "accesorio"
-    }
-]
+
+fetch("productos.json")
+    .then(response => response.json())
+    .then(data => {
+        productos = data;
+        renderProducts(productos);
+    })
+    .catch(error => {
+        console.error("Error cargando productos:", error);
+    });
+
 
 const container = document.getElementById("productos-container");
+
+let productos = [];
 let carrito =[];
 
 function renderProducts(prodArray) {
@@ -98,6 +81,11 @@ btnLimpiar.addEventListener("click", () => {
 
 // Agregar al carrito
 
+function guardarCarrito() {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+
 function activarBotonesAgregar() {
     const botones = document.querySelectorAll(".add-to-cart");
 
@@ -119,6 +107,7 @@ function agregarAlCarrito(id) {
         carrito.push({ ...producto, cantidad: 1 });
     }
 
+    guardarCarrito()
     renderCarrito();
 }
 
@@ -154,6 +143,17 @@ function renderCarrito() {
     actualizarTotal();
 }
 
+function cargarCarrito() {
+    const carritoGuardado = localStorage.getItem("carrito");
+
+    if (carritoGuardado) {
+        carrito = JSON.parse(carritoGuardado);
+
+        guardarCarrito()
+        renderCarrito();
+    }
+}
+
 const carritoItems = document.getElementById("carrito-items");
 
 carritoItems.addEventListener("click", (e) => {
@@ -182,6 +182,8 @@ function actualizarTotal() {
 
 function eliminarDelCarrito(id) {
     carrito = carrito.filter(item => item.id !== id);
+
+    guardarCarrito()
     renderCarrito();
 }
 
@@ -194,6 +196,7 @@ function restarCantidad(id) {
         item.cantidad--;
     }
 
+    guardarCarrito()
     renderCarrito();
 }
 
@@ -201,6 +204,8 @@ function sumarCantidad(id) {
     const item = carrito.find(p => p.id === id);
     if (item) {
         item.cantidad++;
+
+        guardarCarrito()
         renderCarrito();
     }
 }
@@ -215,6 +220,8 @@ function ocultarRestar(boton, cantidad) {
 
 function vaciarCarrito() {
     carrito = [];
+
+    guardarCarrito()
     renderCarrito();
 }
 
@@ -228,3 +235,6 @@ function agregarEventosEliminar() {
         });
     });
 }
+
+cargarCarrito();
+
