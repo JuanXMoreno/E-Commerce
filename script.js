@@ -1,3 +1,5 @@
+let productos = [];
+let carrito =[];
 
 fetch("productos.json")
     .then(response => response.json())
@@ -11,9 +13,6 @@ fetch("productos.json")
 
 
 const container = document.getElementById("productos-container");
-
-let productos = [];
-let carrito =[];
 
 function renderProducts(prodArray) {
 
@@ -46,9 +45,6 @@ function renderProducts(prodArray) {
 }
 
 renderProducts(productos);
-
-
-
 
 // filtro
 
@@ -83,18 +79,6 @@ btnLimpiar.addEventListener("click", () => {
 
 function guardarCarrito() {
     localStorage.setItem("carrito", JSON.stringify(carrito));
-}
-
-
-function activarBotonesAgregar() {
-    const botones = document.querySelectorAll(".add-to-cart");
-
-    botones.forEach(boton => {
-        boton.addEventListener("click", e => {
-            const id = parseInt(e.target.dataset.id);
-            agregarAlCarrito(id);
-        });
-    });
 }
 
 function agregarAlCarrito(id) {
@@ -223,17 +207,6 @@ function vaciarCarrito() {
 
     guardarCarrito()
     renderCarrito();
-}
-
-function agregarEventosEliminar() {
-    const botonesEliminar = document.querySelectorAll(".btn-eliminar");
-
-    botonesEliminar.forEach(btn => {
-        btn.addEventListener("click", () => {
-            const id = parseInt(btn.dataset.id);
-            eliminarDelCarrito(id);
-        });
-    });
 }
 
 cargarCarrito();
