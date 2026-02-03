@@ -2,7 +2,7 @@ body {
   background-color: cornflowerblue;
 }
 
-#products-container {
+#productos-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
@@ -92,5 +92,9 @@ body {
     color: #000;
     cursor: pointer;
     transition: 0.2s;
+}
+
+#checkout {
+  display: none;
 }
 
